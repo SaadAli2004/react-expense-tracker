@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Pricedown';
+  src: url('/src/fonts/pricedow.ttf') format('truetype');
+};
+@font-face {
+  font-family: 'Futura';
+  src: url('/src/fonts/Futura\ LT\ Bold.otf') format('opentype');
+}
+.text-outline{
+    text-shadow:
+ -2px -2px 0 #000, /* top-left */
+   2px -2px 0 #000, /* top-right */
+  -2px  2px 0 #000, /* bottom-left */
+   2px  2px 0 #000;}
