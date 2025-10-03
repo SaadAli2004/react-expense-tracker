@@ -3,30 +3,38 @@ import { Modal } from "@mui/material";
 
 
 function Input() {
+  const click = new Audio("/sounds/click.mp3");
+   click.preload = "auto";
   const playClick = () => {
-    const click = new Audio("/sounds/click.mp3");
     click.play();
   };
+  const close = new Audio("/sounds/close.mp3");
+   close.preload = "auto";
   const playClose = () => {
-    const close = new Audio("/sounds/close.mp3");
     close.play();
   };
+  const submit = new Audio("/sounds/submit.mp3");
+   submit.preload = "auto";
   const playSubmit = () => {
-    const submit = new Audio("/sounds/submit.mp3");
     submit.play();
   };
+  const error = new Audio("/sounds/error.mp3");
+   error.preload = "auto";
   const playError = () => {
-    const error = new Audio("/sounds/error.mp3");
     error.play();
   };
+  const done = new Audio("/sounds/done.mp3");
+   done.preload = "auto";
   const playDone = () => {
-    const done = new Audio("/sounds/done.mp3");
     done.play();
   };
+  const hover = new Audio("/sounds/hover.mp3");
+  hover.preload = "auto";
   const playHover = () => {
-    const hover = new Audio("/sounds/hover.mp3");
     hover.play();
   };
+  
+
 
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
