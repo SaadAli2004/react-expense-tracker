@@ -23,6 +23,10 @@ function Input() {
     const done = new Audio("/sounds/done.mp3");
     done.play();
   };
+  const playHover = () => {
+    const hover = new Audio("/sounds/hover.mp3");
+    hover.play();
+  };
 
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
@@ -123,9 +127,10 @@ function Input() {
 
         </Modal>
         {!balanceCheck ? (
-          <div className="flex justify-center  py-10 text-white">
+          <div className="flex justify-center py-10 text-white">
             <form
               action=""
+              autoComplete="off"
               className="flex gap-2 font-[Futura]"
               onSubmit={balanceHandler}
             >
@@ -138,13 +143,14 @@ function Input() {
                   type="text"
                   onClick={() => playClick()}
                   name="balance"
-                  className="border bg-black w-80 p-3"
+                  className="border focus:outline-blue-300 bg-black w-80 p-3"
                   onChange={(e) => setBalance(e.target.value)}
                 />
                 <div className="flex justify-center">
                   <button
                     type="submit"
-                    className=" border-green-950 border-2 w-4/12 bg-green-600 p-2 rounded-md"
+                    onMouseEnter={playHover}
+                    className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2" 
                   >
                     Submit
                   </button>
@@ -158,7 +164,7 @@ function Input() {
             <div className="text-white">
               <div className="flex justify-center py-6 scale-80 md:scale-105 w-full relative  bottom-8 lg:scale-120 lg:bottom-0 lg:py-10 ">
                 <form
-                  action=""
+                  autoComplete="off"
                   className="flex gap-2 font-[Futura]"
                   onSubmit={submitHandler}
                 >
@@ -174,7 +180,7 @@ function Input() {
                       name="balance"
                       onClick={() => playClick()}
                       value={input}
-                      className="border bg-black w-80 p-3"
+                      className="border focus:outline-blue-300 bg-black w-80 p-3"
                       onChange={(e) => setInput(e.target.value)}
                     />
 
@@ -189,13 +195,14 @@ function Input() {
                       name="balance"
                       onClick={() => playClick()}
                       value={amount}
-                      className="border bg-black w-80 p-3"
+                      className="border focus:outline-blue-300 bg-black w-80 p-3"
                       onChange={(e) => setAmount(e.target.value)}
                     />
                     <div className="flex justify-center">
                       <button
                         type="submit"
-                        className=" border-green-950 border-2 w-4/12 bg-green-600 p-2 rounded-md"
+                       onMouseEnter={playHover}
+                    className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2" 
                       >
                         Submit
                       </button>
@@ -223,7 +230,7 @@ function Input() {
             <div className="text-white flex flex-col xl:scale-80  gap-1 xl:gap-8 md:items-center px-6">
               {items.map((item, index) => (
                 <div
-                  className="border font-[Futura] md:w-9/12 md:text-2xl p-2"
+                  className="border-2 border-blue-300 text-blue-100 font-[bank] text-xl md:w-9/12 md:text-2xl lg:text-4xl p-2"
                   key={index}
                 >
                   <div className="flex justify-between items-center">
@@ -235,7 +242,7 @@ function Input() {
                     <div>
                       <h1
                         onClick={() => handleDelete(item, index)}
-                        className=" bg-red-800 rounded-full flex justify-center items-center text-center w-10 h-10 xl:w-16 xl:h-16 xl:text-3xl "
+                        className=" bg-red-800 rounded-full flex justify-center cursor-pointer items-center text-center w-10 h-10 xl:w-16 xl:h-16 xl:text-3xl "
                       >
                         X
                       </h1>
@@ -245,7 +252,7 @@ function Input() {
               ))}
             </div>
             <div className="flex justify-center font-[Futura] text-white py-8">
-            <h1 onClick={()=> handleDone()}className=" border-green-950 border-2 w-3/12 md:w-2/12 text-center bg-yellow-700 p-2 text-xl lg:w-1/12 rounded-md">Done</h1>
+            <h1 onMouseEnter={playHover} onClick={()=> handleDone()}className="border-green-950 cursor-pointer w-3/12 md:w-2/12 text-center font-[bank] p-2 text-xl md:text-3xl  lg:w-1/12 hover:text-blue-300">Done</h1>
             </div>
           </div>
           

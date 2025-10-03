@@ -8,6 +8,10 @@
   font-family: 'Futura';
   src: url('/src/fonts/Futura\ LT\ Bold.otf') format('opentype');
 }
+@font-face {
+  font-family: "bank";
+  src: url('/src/fonts/bank\ gothic\ medium\ bt.ttf') format('truetype');
+}
 .text-outline{
     text-shadow:
  -2px -2px 0 #000, 
