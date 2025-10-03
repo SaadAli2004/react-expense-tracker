@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 import { Modal } from "@mui/material";
 
-
 function Input() {
   const click = new Audio("/sounds/click.mp3");
-   click.preload = "auto";
+  click.preload = "auto";
   const playClick = () => {
     click.play();
   };
   const close = new Audio("/sounds/close.mp3");
-   close.preload = "auto";
+  close.preload = "auto";
   const playClose = () => {
     close.play();
   };
   const submit = new Audio("/sounds/submit.mp3");
-   submit.preload = "auto";
+  submit.preload = "auto";
   const playSubmit = () => {
     submit.play();
   };
   const error = new Audio("/sounds/error.mp3");
-   error.preload = "auto";
+  error.preload = "auto";
   const playError = () => {
     error.play();
   };
   const done = new Audio("/sounds/done.mp3");
-   done.preload = "auto";
+  done.preload = "auto";
   const playDone = () => {
     done.play();
   };
@@ -33,8 +32,6 @@ function Input() {
   const playHover = () => {
     hover.play();
   };
-  
-
 
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
@@ -43,17 +40,26 @@ function Input() {
   const [cost, setCost] = useState(0);
   const [balanceCheck, setBalanceCheck] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [mouseHover, setMouseHover] = useState(false);
+
+  const handleHover = () => {
+    if (!mouseHover) {
+      playHover();
+      setMouseHover(true);
+    }
+  };
+  const handleLeave = () => {
+    setMouseHover(false);
+  };
 
   const handleDelete = (item, index) => {
     playClose();
     setItems(items.filter((_, i) => i !== index));
-    setCost((prev)=> prev - item.amount);
-    setBalance((prev)=> prev + Number(item.amount));
+    setCost((prev) => prev - item.amount);
+    setBalance((prev) => prev + Number(item.amount));
   };
 
- 
-  useEffect(() => {
-  }, [items]);
+  useEffect(() => {}, [items]);
   const submitHandler = (e) => {
     e.preventDefault();
     if (input.trim("") && amount.trim("") !== "") {
@@ -71,69 +77,61 @@ function Input() {
       setInput("");
       setAmount("");
       playSubmit();
-    }
-    else{
-
+    } else {
       playError();
       return;
-    };
     }
+  };
 
   const balanceHandler = (e) => {
     e.preventDefault();
-    if(isNaN(Number(balance)) || Number(balance) <= 0){
-     playError();
-     return;
+    if (isNaN(Number(balance)) || Number(balance) <= 0) {
+      playError();
+      return;
     }
     setBalanceCheck(true);
     playSubmit();
-  
   };
   const handleDone = () => {
     setShowModal(true);
-    if (balance >= 0){
+    if (balance >= 0) {
       playDone();
-      
     }
-   
-  }
+  };
   return (
     <>
-      
       <div className="h-screen overflow-x-hidden">
         <h1 className="text-5xl text-red-600 text-outline text-center font-[Pricedown] p-10 md:text-7xl lg:text-8xl">
           Expense Tracker App
         </h1>
         <Modal open={showModal} onClose={() => setShowModal(false)}>
-
-            <div className=" bg-black/70  h-full flex justify-center">
-               {balance < 0 ? (
-              
-                <div className="flex flex-col justify-center items-center">
-
-
-                  <h1 className="text-6xl text-red-800 text-outline font-[Pricedown]  md:text-8xl lg:text-[10rem]">mission Failed!</h1>
-                 <h1 className="text-red-800 text-outline font-[Pricedown] text-4xl  md:text-7xl lg:text-8xl">You're ${balance} in debt </h1>
-
-                </div>
-               ):(
-                <div className="flex flex-col justify-center items-center">
-
-                 
-                                  <h1 className="text-6xl text-yellow-700 text-outline  ease-in font-[Pricedown] md:text-8xl lg:text-[10rem]">mission Passed!</h1>
-                                  {balance !== 0 ? (
-                                    <h1 className="text-green-800 text-outline font-[Pricedown]  text-center text-5xl md:text-7xl lg:text-8xl">You managed to save ${balance} </h1>
-                                  ) : (
-                                    <h1 className="text-white text-outline font-[Pricedown] text-5xl  md:text-7xl lg:text-8xl">respect+</h1>
-
-                                  ) }
-                </div>
-
-
-               )}
-
-            </div>
-
+          <div className=" bg-black/70  h-full flex justify-center">
+            {balance < 0 ? (
+              <div className="flex flex-col justify-center items-center">
+                <h1 className="text-6xl text-red-800 text-outline font-[Pricedown]  md:text-8xl lg:text-[10rem]">
+                  mission Failed!
+                </h1>
+                <h1 className="text-red-800 text-outline font-[Pricedown] text-4xl  md:text-7xl lg:text-8xl">
+                  You're ${balance} in debt{" "}
+                </h1>
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center">
+                <h1 className="text-6xl text-yellow-700 text-outline  ease-in font-[Pricedown] md:text-8xl lg:text-[10rem]">
+                  mission Passed!
+                </h1>
+                {balance !== 0 ? (
+                  <h1 className="text-green-800 text-outline font-[Pricedown]  text-center text-5xl md:text-7xl lg:text-8xl">
+                    You managed to save ${balance}{" "}
+                  </h1>
+                ) : (
+                  <h1 className="text-white text-outline font-[Pricedown] text-5xl  md:text-7xl lg:text-8xl">
+                    respect+
+                  </h1>
+                )}
+              </div>
+            )}
+          </div>
         </Modal>
         {!balanceCheck ? (
           <div className="flex justify-center py-10 text-white">
@@ -159,7 +157,8 @@ function Input() {
                   <button
                     type="submit"
                     onMouseEnter={playHover}
-                    className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2" 
+                  
+                    className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2"
                   >
                     Submit
                   </button>
@@ -210,8 +209,8 @@ function Input() {
                     <div className="flex justify-center">
                       <button
                         type="submit"
-                       onMouseEnter={playHover}
-                    className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2" 
+                        onMouseEnter={playHover}
+                        className="w-4/12 text-2xl cursor-pointer hover:text-blue-300 font-[bank] p-2"
                       >
                         Submit
                       </button>
@@ -220,7 +219,7 @@ function Input() {
                 </form>
               </div>
             </div>
-            
+
             {/* list */}
             <div className="text-white">
               <div className="flex justify-between p-4 xl:scale-70  font-[Futura] md:text-2xl md:px-15 lg:text-3xl xl:text-4xl lg:px-30 lg:pt-20">
@@ -261,15 +260,19 @@ function Input() {
               ))}
             </div>
             <div className="flex justify-center font-[Futura] text-white py-8">
-            <h1 onMouseEnter={playHover} onClick={()=> handleDone()}className="border-green-950 cursor-pointer w-3/12 md:w-2/12 text-center font-[bank] p-2 text-xl md:text-3xl  lg:w-1/12 hover:text-blue-300">Done</h1>
+              <h1
+                onMouseEnter={playHover}
+                onMouseLeave={handleLeave}
+                onClick={() => handleDone()}
+                className="border-green-950 cursor-pointer w-3/12 md:w-2/12 text-center font-[bank] p-2 text-xl md:text-3xl  lg:w-1/12 hover:text-blue-300"
+              >
+                Done
+              </h1>
             </div>
           </div>
-          
         )}
 
-        <div>
-          
-        </div>
+        <div></div>
       </div>
     </>
   );
