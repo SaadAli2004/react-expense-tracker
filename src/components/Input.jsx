@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Modal } from "@mui/material";
+import { useState } from "react";
+import { Modal, Fade } from "@mui/material";
 
 function Input() {
   const click = new Audio("/sounds/click.mp3");
@@ -40,17 +40,7 @@ function Input() {
   const [cost, setCost] = useState(0);
   const [balanceCheck, setBalanceCheck] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [mouseHover, setMouseHover] = useState(false);
 
-  const handleHover = () => {
-    if (!mouseHover) {
-      playHover();
-      setMouseHover(true);
-    }
-  };
-  const handleLeave = () => {
-    setMouseHover(false);
-  };
 
   const handleDelete = (item, index) => {
     playClose();
@@ -59,7 +49,7 @@ function Input() {
     setBalance((prev) => prev + Number(item.amount));
   };
 
-  useEffect(() => {}, [items]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (input.trim("") && amount.trim("") !== "") {
@@ -97,6 +87,10 @@ function Input() {
     if (balance >= 0) {
       playDone();
     }
+    setTimeout(()=> {
+      window.location.reload();
+
+    },7000)
   };
   return (
     <>
@@ -105,6 +99,8 @@ function Input() {
           Expense Tracker App
         </h1>
         <Modal open={showModal} onClose={() => setShowModal(false)}>
+          <Fade in={showModal} timeout={900}>
+
           <div className=" bg-black/70  h-full flex justify-center">
             {balance < 0 ? (
               <div className="flex flex-col justify-center items-center">
@@ -132,6 +128,8 @@ function Input() {
               </div>
             )}
           </div>
+
+          </Fade>
         </Modal>
         {!balanceCheck ? (
           <div className="flex justify-center py-10 text-white">
@@ -262,7 +260,6 @@ function Input() {
             <div className="flex justify-center font-[Futura] text-white py-8">
               <h1
                 onMouseEnter={playHover}
-                onMouseLeave={handleLeave}
                 onClick={() => handleDone()}
                 className="border-green-950 cursor-pointer w-3/12 md:w-2/12 text-center font-[bank] p-2 text-xl md:text-3xl  lg:w-1/12 hover:text-blue-300"
               >
