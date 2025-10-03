@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-
 function Input() {
   const playClick = () => {
     const click = new Audio("/src/sounds/click.mp3");
@@ -25,45 +24,54 @@ function Input() {
 
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState(null);
   const [cost, setCost] = useState(0);
   const [balanceCheck, setBalanceCheck] = useState(false);
-  
 
-  const handleDelete = (id) => {
+  const handleDelete = (item, index) => {
     playClose();
-    setItems(items.filter((_, index) => id !== index));
+    setItems(items.filter((_, i) => i !== index));
+    setCost((prev)=> prev - item.amount);
   };
 
   useEffect(() => {
-
     console.log("Updated items:", items);
   }, [items]);
   const submitHandler = (e) => {
     e.preventDefault();
-    playSubmit();
+    if (input.trim("") && amount.trim("") !== "") {
+      const data = {
+        name: input,
+        amount: amount,
+      };
 
-    const data = {
-      name: input,
-      amount: amount,
+      setBalance((prev) => prev - Number(amount));
+
+      setItems((prev) => [...prev, data]);
+
+      setCost((prev) => prev + Number(amount));
+
+      setInput("");
+      setAmount("");
+      playSubmit();
+    }
+    else{
+
+      playError();
+      return;
     };
-    
+    }
 
-    setItems((prev) => [...prev, data]);
-
-    setCost((prev) => prev + Number(amount));
-        setBalance((prev) => Number(prev - cost));
-
-
-    setInput("");
-    setAmount("");
-  };
   const balanceHandler = (e) => {
     e.preventDefault();
+    if(isNaN(Number(balance)) || Number(balance) <= 0){
+     playError();
+     return;
+    }
     setBalanceCheck(true);
     playSubmit();
-
+  
   };
   return (
     <>
@@ -86,15 +94,13 @@ function Input() {
 
                 <input
                   type="text"
-                  onClick={()=> playClick()}
-
+                  onClick={() => playClick()}
                   name="balance"
                   className="border bg-black w-80 p-3"
-                  onChange={(e) =>Number(setBalance(e.target.value))}
+                  onChange={(e) => setBalance(e.target.value)}
                 />
                 <div className="flex justify-center">
                   <button
-                  onClick={()=> playSubmit()}
                     type="submit"
                     className=" border-green-950 border-2 w-4/12 bg-green-600 p-2 rounded-md"
                   >
@@ -124,7 +130,7 @@ function Input() {
                     <input
                       type="text"
                       name="balance"
-                    onClick={()=> playClick()}
+                      onClick={() => playClick()}
                       value={input}
                       className="border bg-black w-80 p-3"
                       onChange={(e) => setInput(e.target.value)}
@@ -137,10 +143,10 @@ function Input() {
                       Enter Price
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="balance"
-                      onClick={()=> playClick()}
-                       value = {amount}
+                      onClick={() => playClick()}
+                      value={amount}
                       className="border bg-black w-80 p-3"
                       onChange={(e) => setAmount(e.target.value)}
                     />
@@ -186,7 +192,7 @@ function Input() {
 
                     <div>
                       <h1
-                        onClick={() => handleDelete(index)}
+                        onClick={() => handleDelete(item, index)}
                         className=" bg-red-800 rounded-full flex justify-center items-center text-center w-10 h-10 xl:w-16 xl:h-16 xl:text-3xl "
                       >
                         X
