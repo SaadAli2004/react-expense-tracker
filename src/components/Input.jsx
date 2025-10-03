@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Modal } from "@mui/material";
+
 
 function Input() {
   const playClick = () => {
@@ -28,6 +30,7 @@ function Input() {
   const [balance, setBalance] = useState(null);
   const [cost, setCost] = useState(0);
   const [balanceCheck, setBalanceCheck] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleDelete = (item, index) => {
     playClose();
@@ -35,6 +38,7 @@ function Input() {
     setCost((prev)=> prev - item.amount);
   };
 
+ 
   useEffect(() => {
     console.log("Updated items:", items);
   }, [items]);
@@ -73,13 +77,52 @@ function Input() {
     playSubmit();
   
   };
+  const handleDone = () => {
+    setShowModal(true);
+    if (balance >= 0){
+      playDone();
+      
+    }
+   
+  }
   return (
     <>
+      
       <div className="h-screen overflow-x-hidden">
         <h1 className="text-5xl text-red-600 text-outline text-center font-[Pricedown] p-10 md:text-7xl lg:text-8xl">
           Expense Tracker App
         </h1>
+        <Modal open={showModal} onClose={() => setShowModal(false)}>
 
+            <div className=" bg-black/70  h-full flex justify-center">
+               {balance < 0 ? (
+              
+                <div className="flex flex-col justify-center items-center">
+
+
+                  <h1 className="text-6xl text-red-800 text-outline font-[Pricedown]  md:text-8xl lg:text-[10rem]">mission Failed!</h1>
+                 <h1 className="text-red-800 text-outline font-[Pricedown] text-4xl  md:text-7xl lg:text-8xl">You're ${balance} in debt </h1>
+
+                </div>
+               ):(
+                <div className="flex flex-col justify-center items-center">
+
+                 
+                                  <h1 className="text-6xl text-yellow-700 text-outline  ease-in font-[Pricedown] md:text-8xl lg:text-[10rem]">mission Passed!</h1>
+                                  {balance !== 0 ? (
+                                    <h1 className="text-green-800 text-outline font-[Pricedown]  text-center text-5xl md:text-7xl lg:text-8xl">You managed to save ${balance} </h1>
+                                  ) : (
+                                    <h1 className="text-white text-outline font-[Pricedown] text-5xl  md:text-7xl lg:text-8xl">respect+</h1>
+
+                                  ) }
+                </div>
+
+
+               )}
+
+            </div>
+
+        </Modal>
         {!balanceCheck ? (
           <div className="flex justify-center  py-10 text-white">
             <form
@@ -114,7 +157,7 @@ function Input() {
           <div>
             {/* Form */}
             <div className="text-white">
-              <div className="flex justify-center py-6 scale-80 md:scale-105 w-full relative  bottom-8  border lg:scale-120 lg:bottom-0 lg:py-10 ">
+              <div className="flex justify-center py-6 scale-80 md:scale-105 w-full relative  bottom-8 lg:scale-120 lg:bottom-0 lg:py-10 ">
                 <form
                   action=""
                   className="flex gap-2 font-[Futura]"
@@ -162,7 +205,7 @@ function Input() {
                 </form>
               </div>
             </div>
-
+            
             {/* list */}
             <div className="text-white">
               <div className="flex justify-between p-4 xl:scale-70  font-[Futura] md:text-2xl md:px-15 lg:text-3xl xl:text-4xl lg:px-30 lg:pt-20">
@@ -202,8 +245,16 @@ function Input() {
                 </div>
               ))}
             </div>
+            <div className="flex justify-center font-[Futura] text-white py-8">
+            <h1 onClick={()=> handleDone()}className=" border-green-950 border-2 w-3/12 md:w-2/12 text-center bg-yellow-700 p-2 text-xl lg:w-1/12 rounded-md">Done</h1>
+            </div>
           </div>
+          
         )}
+
+        <div>
+          
+        </div>
       </div>
     </>
   );
