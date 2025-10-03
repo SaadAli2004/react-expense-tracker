@@ -48,6 +48,7 @@ function Input() {
     playClose();
     setItems(items.filter((_, i) => i !== index));
     setCost((prev)=> prev - item.amount);
+    setBalance((prev)=> prev + Number(item.amount));
   };
 
  
