@@ -4,23 +4,23 @@ import { Modal } from "@mui/material";
 
 function Input() {
   const playClick = () => {
-    const click = new Audio("/src/sounds/click.mp3");
+    const click = new Audio("/sounds/click.mp3");
     click.play();
   };
   const playClose = () => {
-    const close = new Audio("/src/sounds/close.mp3");
+    const close = new Audio("/sounds/close.mp3");
     close.play();
   };
   const playSubmit = () => {
-    const submit = new Audio("/src/sounds/submit.mp3");
+    const submit = new Audio("/sounds/submit.mp3");
     submit.play();
   };
   const playError = () => {
-    const error = new Audio("/src/sounds/error.mp3");
+    const error = new Audio("/sounds/error.mp3");
     error.play();
   };
   const playDone = () => {
-    const done = new Audio("/src/sounds/done.mp3");
+    const done = new Audio("/sounds/done.mp3");
     done.play();
   };
 
@@ -40,7 +40,6 @@ function Input() {
 
  
   useEffect(() => {
-    console.log("Updated items:", items);
   }, [items]);
   const submitHandler = (e) => {
     e.preventDefault();
