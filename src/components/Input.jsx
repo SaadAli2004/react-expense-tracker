@@ -257,6 +257,9 @@ function Input() {
                 </div>
               ))}
             </div>
+            {items.length !== 0 ? (
+
+
             <div className="flex justify-center font-[Futura] text-white py-8">
               <h1
                 onMouseEnter={playHover}
@@ -266,6 +269,11 @@ function Input() {
                 Done
               </h1>
             </div>
+
+            ): (
+              <>
+              </>
+            )}
           </div>
         )}
 
